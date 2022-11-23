@@ -323,6 +323,7 @@ enum CellIdentifier {
     // Dashboard
     static let incentiveDashboardCell = "IncentiveDashboardCell"
     static let dashboardProfileCell = "DashboardProfileCell"
+    static let dashboardProfileCell_EMA = "DashboardProfileCell_EMA"
     static let yourTargetRevenueCell = "YourTargetRevenueCell"
     static let revenueCell = "RevenueCell"
     static let monthCollectionCell = "MonthCollectionCell"

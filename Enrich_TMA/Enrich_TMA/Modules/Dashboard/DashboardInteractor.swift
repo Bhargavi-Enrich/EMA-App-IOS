@@ -22,6 +22,10 @@ protocol DashboardBusinessLogic {
     func getIncentiveDashboard(request: Dashboard.GetIncentiveDashboard.Request)
     func getRevenueDashboard(request: Dashboard.GetRevenueDashboard.Request)
     func getEarningsDashboard(request: Dashboard.GetEarningsDashboard.Request)
+    
+    func doPostMarkCheckInOutRequest(request: MoreModule.MarkCheckInOut.Request, method: HTTPMethod)
+    func doPostCheckInOutDetailsRequest(request: MoreModule.CheckInOutDetails.Request, method: HTTPMethod)
+    
 }
 
 class DashboardInteractor: DashboardBusinessLogic {
@@ -85,5 +89,17 @@ class DashboardInteractor: DashboardBusinessLogic {
         worker = DashboardWorker()
         worker?.presenter = self.presenter
         worker?.postRequestGetEarningsDashboard(request: request)
+    }
+    
+    func doPostMarkCheckInOutRequest(request: MoreModule.MarkCheckInOut.Request, method: HTTPMethod) {
+        worker = DashboardWorker()
+        worker?.presenter = self.presenter
+        worker?.postRequestForMarkCheckInOut(request: request, method: method)
+    }
+    
+    func doPostCheckInOutDetailsRequest(request: MoreModule.CheckInOutDetails.Request, method: HTTPMethod) {
+        worker = DashboardWorker()
+        worker?.presenter = self.presenter
+        worker?.postRequestForCheckInOutDetails(request: request, method: method)
     }
 }

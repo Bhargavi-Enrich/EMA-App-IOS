@@ -62,6 +62,7 @@ class DashboardVC: UIViewController, DashboardDisplayLogic {
         super.viewDidLoad()
        
         tableView.register(UINib(nibName: CellIdentifier.dashboardProfileCell, bundle: nil), forCellReuseIdentifier: CellIdentifier.dashboardProfileCell)
+        tableView.register(UINib(nibName: CellIdentifier.dashboardProfileCell_EMA, bundle: nil), forCellReuseIdentifier: CellIdentifier.dashboardProfileCell_EMA)
         tableView.register(UINib(nibName: CellIdentifier.todaysAppointmentHeaderCell, bundle: nil), forCellReuseIdentifier: CellIdentifier.todaysAppointmentHeaderCell)
         tableView.register(UINib(nibName: CellIdentifier.incentiveDashboardCell, bundle: nil), forCellReuseIdentifier: CellIdentifier.incentiveDashboardCell)
         
@@ -285,6 +286,43 @@ extension DashboardVC {
             let vc = EarningsViewController.instantiate(fromAppStoryboard: .Earnings)
             self.navigationController?.pushViewController(vc, animated: true)
         }
+        if let model = viewModel as? MoreModule.GetCheckInStatus.Response,
+            model.status == true, let checkin = model.checkin {
+            userPunchedIn = checkin
+            //self.tableView.reloadData()
+        }
+        else if let model = viewModel as? MoreModule.MarkCheckInOut.Response {
+
+            if model.status == true {
+                userPunchedIn = !userPunchedIn
+                self.tableView.reloadData()
+                getCheckInDetails()
+            }
+            DispatchQueue.main.async { [unowned self] in
+                self.showAlert(alertTitle: alertTitle, alertMessage: model.message )
+            }
+        }
+        else if let model = viewModel as? MoreModule.CheckInOutDetails.Response {
+            if model.status == true {
+                if let checkIn = model.data?.first(where: {$0.checkin == "1"}),
+                    let dateTime = checkIn.checkinout_time,
+                    let time = dateTime.getCheckInTime(dateString: dateTime, withFormat: "hh:mm aaa") {
+                    //lblPunchInTime.text = time
+                }
+                else {
+                    //lblPunchInTime.text = "-"
+                }
+
+                if let checkOut = model.data?.last(where: {$0.checkin == "0"}),
+                    let dateTime = checkOut.checkinout_time,
+                    let time = dateTime.getCheckInTime(dateString: dateTime, withFormat: "hh:mm aaa") {
+                    //lblPunchOutTime.text = time
+                }
+                else {
+                    //lblPunchOutTime.text = "-"
+                }
+            }
+        }
     }
     
     func displayError(errorMessage: String?) {
@@ -430,7 +468,59 @@ extension DashboardVC: ProductSelectionDelegate {
     
 }
 
+var userPunchedIn = false
 extension DashboardVC: DashboardHeaderCellDelegate {
+    func actionCheckIn(_ cell: DashboardProfileCell_EMA) {
+        let message = userPunchedIn ? AlertMessagesToAsk.askToPunchOut : AlertMessagesToAsk.askToPunchIn
+        let alertController = UIAlertController(title: alertTitle, message: message, preferredStyle: UIAlertController.Style.alert)
+        alertController.addAction(UIAlertAction(title: AlertButtonTitle.yes, style: UIAlertAction.Style.cancel) { _ -> Void in
+            self.markCheckInOut()
+            cell.btnCheckIn.isHidden = true
+            cell.lblCheckInValue.isHidden = false
+            cell.lblCheckIn.isHidden = false
+            
+            cell.btnCheckOut.isHidden = false
+            cell.lblCheckOutValue.isHidden = true
+            cell.lblCheckOut.isHidden = true
+        })
+        alertController.addAction(UIAlertAction(title: AlertButtonTitle.no, style: UIAlertAction.Style.default) { _ -> Void in
+            // Do Nothing
+        })
+        self.present(alertController, animated: true, completion: nil)
+    }
+
+    func actionCheckOut() {
+        
+    }
+    
+    func markCheckInOut() {
+        if let userData = UserDefaults.standard.value(MyProfile.GetUserProfile.UserData.self, forKey: UserDefauiltsKeys.k_Key_LoginUser) {
+            EZLoadingActivity.show("Loading...", disableUI: true)
+            let lat = "\(LocationManager.sharedInstance.location().latitude)" // "22.997"
+            let long = "\(LocationManager.sharedInstance.location().longitude)" // "72.608"
+
+            EZLoadingActivity.show("Loading...", disableUI: true)
+            let request = MoreModule.MarkCheckInOut.Request(
+                emp_code: userData.employee_code ?? "",
+                emp_name: userData.username ?? "", branch_code: userData.base_salon_code ?? "",
+                checkinout_time: Date().checkInOutDateTime, checkin: userPunchedIn ? "0" : "1",
+                employee_latitude: lat, employee_longitude: long, is_custom: true,
+                emp_fname: userData.firstname ?? "",
+                emp_lname: userData.lastname ?? "")
+
+            interactor?.doPostMarkCheckInOutRequest(request: request, method: .post)
+        }
+    }
+    
+    func getCheckInDetails() {
+        if let userData = UserDefaults.standard.value(MyProfile.GetUserProfile.UserData.self, forKey: UserDefauiltsKeys.k_Key_LoginUser) {
+            let date = Date().dayYearMonthDate
+
+            EZLoadingActivity.show("Loading...", disableUI: true)
+            let request = MoreModule.CheckInOutDetails.Request(date: date, emp_code: userData.employee_code ?? "", is_custom: true)
+            interactor?.doPostCheckInOutDetailsRequest(request: request, method: .post)
+        }
+    }
     
     func locationUpdateAction() {
     }
@@ -458,6 +548,8 @@ extension DashboardVC: DashboardHeaderCellDelegate {
             }
         }
     }
+    
+    
 }
 
 extension DashboardVC: IncentiveDashboardDelegate {
@@ -494,7 +586,7 @@ extension DashboardVC: UITableViewDelegate, UITableViewDataSource {
         
         switch data.identifier {
         case .dashboardProfile:
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: CellIdentifier.dashboardProfileCell, for: indexPath) as? DashboardProfileCell else {
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: CellIdentifier.dashboardProfileCell_EMA, for: indexPath) as? DashboardProfileCell_EMA else {
                 return UITableViewCell()
             }
             cell.configureCell()

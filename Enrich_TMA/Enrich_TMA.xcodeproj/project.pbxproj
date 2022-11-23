@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0C62487E28C8B52400179DA8 /* DashboardProfileCell_EMA.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C62487C28C8B52400179DA8 /* DashboardProfileCell_EMA.swift */; };
+		0C62487F28C8B52400179DA8 /* DashboardProfileCell_EMA.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C62487D28C8B52400179DA8 /* DashboardProfileCell_EMA.xib */; };
 		0E745891275A58C500005935 /* ExtensionDouble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E745890275A58C500005935 /* ExtensionDouble.swift */; };
 		449D13B727844AFE00E76FF9 /* CTCBreakUpTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 449D13B527844AFE00E76FF9 /* CTCBreakUpTableViewCell.xib */; };
 		449D13B827844AFE00E76FF9 /* CTCBreakUpTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 449D13B627844AFE00E76FF9 /* CTCBreakUpTableViewCell.swift */; };
@@ -928,6 +930,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0C62487C28C8B52400179DA8 /* DashboardProfileCell_EMA.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardProfileCell_EMA.swift; sourceTree = "<group>"; };
+		0C62487D28C8B52400179DA8 /* DashboardProfileCell_EMA.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DashboardProfileCell_EMA.xib; sourceTree = "<group>"; };
 		0E745890275A58C500005935 /* ExtensionDouble.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ExtensionDouble.swift; path = Enrich_TMA/Utility/Extensions/ExtensionDouble.swift; sourceTree = SOURCE_ROOT; };
 		0F93DD41D1FF48BF2C4971B5 /* Pods_Enrich_TMAUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Enrich_TMAUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2F07588299F85041D16386AA /* Pods-Enrich_TMA.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Enrich_TMA.release.xcconfig"; path = "Target Support Files/Pods-Enrich_TMA/Pods-Enrich_TMA.release.xcconfig"; sourceTree = "<group>"; };
@@ -2682,6 +2686,8 @@
 			children = (
 				E33F8FE52355B6BF000D5288 /* DashboardProfileCell.swift */,
 				E33F8FE62355B6BF000D5288 /* DashboardProfileCell.xib */,
+				0C62487C28C8B52400179DA8 /* DashboardProfileCell_EMA.swift */,
+				0C62487D28C8B52400179DA8 /* DashboardProfileCell_EMA.xib */,
 				E33F8FE92355C738000D5288 /* TodaysAppointmentHeaderCell.swift */,
 				E33F8FEA2355C738000D5288 /* TodaysAppointmentHeaderCell.xib */,
 				E3CF2A0123827D9E003EB5F6 /* AppointmentCollectionCell.swift */,
@@ -4690,7 +4696,7 @@
 			attributes = {
 				LastSwiftUpdateCheck = 1010;
 				LastUpgradeCheck = 1010;
-				ORGANIZATIONNAME = "e-zest";
+				ORGANIZATIONNAME = EnrichBeauty;
 				TargetAttributes = {
 					E3D1969A233105DA006597BA = {
 						CreatedOnToolsVersion = 10.1;
@@ -4765,6 +4771,7 @@
 				E33F1186234B12DA00C2F9F5 /* FuturaPTCondBoldOblique.otf in Resources */,
 				F848536C246A882D00F64243 /* TeleMarketingCell.xib in Resources */,
 				E372380723570EAC00DD0375 /* MyCustomersHeaderCell.xib in Resources */,
+				0C62487F28C8B52400179DA8 /* DashboardProfileCell_EMA.xib in Resources */,
 				F8EDBE9825DBDCD2001150D1 /* ProductivityListViewCell.xib in Resources */,
 				F875C46D2410D919009AA42F /* ColorCell.xib in Resources */,
 				E38815E223797C440091964B /* JabCardServiceHeaderCell.xib in Resources */,
@@ -5124,6 +5131,7 @@
 				F89B140E2771927400D18658 /* ViewCTCInteractor.swift in Sources */,
 				E37237DB2356F3FF00DD0375 /* MyProfilePresenter.swift in Sources */,
 				E340855C23D8287200AD809B /* WalletAndRewardCell.swift in Sources */,
+				0C62487E28C8B52400179DA8 /* DashboardProfileCell_EMA.swift in Sources */,
 				F85EE67A24BDAEAB001D9B0F /* ListingPresenter.swift in Sources */,
 				F8A3C8BA25DE52DD0088739A /* RevenueTrendVC.swift in Sources */,
 				E362486823E0365100CCF440 /* AvailMyPackages.swift in Sources */,
