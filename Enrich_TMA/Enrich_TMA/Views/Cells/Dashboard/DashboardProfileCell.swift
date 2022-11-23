@@ -8,11 +8,11 @@
 
 import UIKit
 
-//protocol DashboardHeaderCellDelegate: class {
-//    func locationUpdateAction()
-//    func locationDetailViewUpdate()
-//    func actionCustomerCount()
-//}
+protocol DashboardHeaderCellDelegate: class {
+    func locationUpdateAction()
+    func locationDetailViewUpdate()
+    func actionCustomerCount()
+}
 
 class DashboardProfileCell: UITableViewCell {
 
@@ -81,10 +81,10 @@ class DashboardProfileCell: UITableViewCell {
 
 }
 
-//struct DashboardProfileCellModel {
-//    let userName: String
-//    let location: String
-//    let profilePictureURL: String
-//    let rating: Double
-//    let customerCount: Int
-//}
+struct DashboardProfileCellModel {
+    let userName: String
+    let location: String
+    let profilePictureURL: String
+    let rating: Double
+    let customerCount: Int
+}

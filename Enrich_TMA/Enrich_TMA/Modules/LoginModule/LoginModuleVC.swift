@@ -68,10 +68,6 @@ class LoginModuleVC: DesignableViewController, LoginModuleDisplayLogic {
             self.txtfEnrichId.text = ""
             self.txtfPassword.text = ""
         }
-        
-        self.txtfEnrichId.text = "23699"
-        self.txtfPassword.text = "Admin@123"
-        
         fromTerms = false
     }
 
